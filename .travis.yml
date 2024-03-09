@@ -1,0 +1,15 @@
+sudo: required
+services: 
+  - docker
+
+before_install:
+  - docker build -t opmalhi/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true opmalhi/react-test npm test
+
+after_success:
+  - docker build -t opmalhi/multi-client ./client
+  - docker build -t opmalhi/multi-nginx ./nginx
+  - docker build -t opmalhi/multi-server ./server
+  - docker build -t opmalhi/multi-worker ./worker
