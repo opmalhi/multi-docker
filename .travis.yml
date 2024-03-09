@@ -13,3 +13,10 @@ after_success:
   - docker build -t opmalhi/multi-nginx ./nginx
   - docker build -t opmalhi/multi-server ./server
   - docker build -t opmalhi/multi-worker ./worker
+  # Log in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push opmalhi/multi-client
+  - docker push opmalhi/multi-nginx
+  - docker push opmalhi/multi-server
+  - docker push opmalhi/multi-worker
